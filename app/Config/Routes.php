@@ -21,4 +21,8 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin'], function($rout
     $routes->post('login/process', 'Auth::process');   // Proses Login Admin
     $routes->get('logout', 'Auth::logout');            // Logout Admin
     $routes->get('dashboard', 'Dashboard::index');     // Dashboard Admin
+    // --- ROUTE CHECKOUT ---
+$routes->get('checkout', 'Checkout::index');
+$routes->post('checkout/process', 'Checkout::process');
+$routes->get('checkout/sukses/(:segment)', 'Checkout::sukses/$1');
 });
