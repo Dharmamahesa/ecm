@@ -106,23 +106,6 @@
             color: #6c757d;
         }
 
-        /* --- Login Modal Styling --- */
-        .modal-header {
-            background: #0d6efd;
-            color: white;
-        }
-        .btn-close {
-            filter: invert(1);
-        }
-        .nav-tabs .nav-link {
-            color: #495057;
-            font-weight: 600;
-        }
-        .nav-tabs .nav-link.active {
-            color: #0d6efd;
-            border-bottom: 3px solid #0d6efd;
-        }
-
         /* --- Footer --- */
         footer {
             background: #212529;
@@ -159,10 +142,7 @@
                 <div class="d-flex align-items-center gap-3">
                     <a href="<?= base_url('keranjang') ?>" class="position-relative text-dark fs-5">
                         <i class="fas fa-shopping-cart"></i>
-                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.6rem;">
-                            0
-                        </span>
-                    </a>
+                        </a>
                     
                     <?php if(session()->get('is_konsumen_logged_in') || session()->get('is_admin_logged_in')): ?>
                         <div class="dropdown">
@@ -216,8 +196,10 @@
     </div>
     <?php else: ?>
         <div class="bg-dark text-white text-center py-5">
-            <h1>Selamat Datang di E-Commerce</h1>
-            <p>Belanja hemat, mudah, dan terpercaya</p>
+            <div class="container">
+                <h1 class="display-4 fw-bold">Selamat Datang di Toko Kami</h1>
+                <p class="lead">Temukan produk terbaik dengan harga terjangkau</p>
+            </div>
         </div>
     <?php endif; ?>
 
@@ -316,7 +298,7 @@
             <div class="row">
                 <div class="col-md-4 mb-4">
                     <h5 class="text-white fw-bold mb-3">TENTANG KAMI</h5>
-                    <p class="small">Kami menyediakan berbagai produk berkualitas dengan harga terbaik untuk kebutuhan Anda sehari-hari.</p>
+                    <p class="small">Kami menyediakan berbagai produk berkualitas dengan harga terbaik untuk kebutuhan Anda sehari-hari. Kepuasan pelanggan adalah prioritas kami.</p>
                 </div>
                 <div class="col-md-4 mb-4">
                     <h5 class="text-white fw-bold mb-3">LINK CEPAT</h5>
@@ -341,83 +323,62 @@
     </footer>
 
     <div class="modal fade" id="loginModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content overflow-hidden border-0 shadow-lg">
-                <div class="modal-header border-0 pb-0">
-                    <h5 class="modal-title fw-bold text-white"><i class="fas fa-sign-in-alt me-2"></i> Masuk Akun</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="modal-dialog modal-dialog-centered modal-sm"> <div class="modal-content overflow-hidden border-0 shadow-lg">
+                <div class="modal-header bg-primary text-white border-0 text-center justify-content-center position-relative">
+                    <h5 class="modal-title fw-bold"><i class="fas fa-key me-2"></i>Login</h5>
+                    <button type="button" class="btn-close btn-close-white position-absolute end-0 me-3" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body p-0">
-                    <ul class="nav nav-tabs nav-fill" id="loginTab" role="tablist">
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link active py-3 rounded-0" id="member-tab" data-bs-toggle="tab" data-bs-target="#member" type="button" role="tab" aria-selected="true">
-                                <i class="fas fa-user me-1"></i> Pelanggan
-                            </button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link py-3 rounded-0" id="admin-tab" data-bs-toggle="tab" data-bs-target="#admin" type="button" role="tab" aria-selected="false">
-                                <i class="fas fa-user-shield me-1"></i> Admin
-                            </button>
-                        </li>
-                    </ul>
+                <div class="modal-body p-4">
+                    
+                    <?php if(session()->getFlashdata('error')): ?>
+                        <div class="alert alert-danger small p-2 mb-3 text-center">
+                            <?= session()->getFlashdata('error') ?>
+                        </div>
+                    <?php endif; ?>
 
-                    <div class="tab-content p-4" id="loginTabContent">
+                    <p class="text-center text-muted small mb-4">Masuk</p>
+
+                    <form action="<?= base_url('auth/login/process') ?>" method="post">
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold">Username / Email</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light border-end-0"><i class="fas fa-user text-muted"></i></span>
+                                <input type="text" name="user_email" class="form-control border-start-0 ps-0 bg-light" placeholder="user@mail.com" required>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label small fw-bold">Password</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light border-end-0"><i class="fas fa-lock text-muted"></i></span>
+                                <input type="password" name="password" class="form-control border-start-0 ps-0 bg-light" placeholder="******" required>
+                            </div>
+                        </div>
                         
-                        <div class="tab-pane fade show active" id="member" role="tabpanel" aria-labelledby="member-tab">
-                            <p class="text-center text-muted mb-4 small">Silakan masuk untuk mulai berbelanja.</p>
-                            <form action="<?= base_url('auth/login/process') ?>" method="post"> 
-                                <div class="mb-3">
-                                    <label class="form-label small fw-bold">Email / Username</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text bg-light border-end-0"><i class="fas fa-envelope text-muted"></i></span>
-                                        <input type="text" name="email_user" class="form-control border-start-0 ps-0 bg-light" placeholder="Masukkan email anda" required>
-                                    </div>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label small fw-bold">Password</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text bg-light border-end-0"><i class="fas fa-lock text-muted"></i></span>
-                                        <input type="password" name="password" class="form-control border-start-0 ps-0 bg-light" placeholder="******" required>
-                                    </div>
-                                </div>
-                                <div class="d-grid mb-3">
-                                    <button type="submit" class="btn btn-primary fw-bold">Masuk Sekarang</button>
-                                </div>
-                                <div class="text-center small">
-                                    Belum punya akun? <a href="<?= base_url('auth/register') ?>" class="text-decoration-none fw-bold">Daftar disini</a>
-                                </div>
-                            </form>
+                        <div class="d-grid mb-3">
+                            <button type="submit" class="btn btn-primary fw-bold rounded-pill">Masuk Akun</button>
                         </div>
+                    </form>
 
-                        <div class="tab-pane fade" id="admin" role="tabpanel" aria-labelledby="admin-tab">
-                            <p class="text-center text-muted mb-4 small">Area khusus administrator.</p>
-                            <form action="<?= base_url('admin/login/process') ?>" method="post">
-                                <div class="mb-3">
-                                    <label class="form-label small fw-bold">Username Admin</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text bg-light border-end-0"><i class="fas fa-user-shield text-muted"></i></span>
-                                        <input type="text" name="username" class="form-control border-start-0 ps-0 bg-light" placeholder="Username" required>
-                                    </div>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label small fw-bold">Password</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text bg-light border-end-0"><i class="fas fa-key text-muted"></i></span>
-                                        <input type="password" name="password" class="form-control border-start-0 ps-0 bg-light" placeholder="******" required>
-                                    </div>
-                                </div>
-                                <div class="d-grid">
-                                    <button type="submit" class="btn btn-dark fw-bold">Login Administrator</button>
-                                </div>
-                            </form>
-                        </div>
-
+                    <div class="text-center border-top pt-3">
+                        <small class="text-muted">Belum punya akun?</small><br>
+                        <a href="<?= base_url('auth/register') ?>" class="text-decoration-none fw-bold small">Daftar Member Disini</a>
                     </div>
+
                 </div>
             </div>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <?php if(session()->getFlashdata('error')): ?>
+    <script>
+        window.onload = function() {
+            var myModal = new bootstrap.Modal(document.getElementById('loginModal'));
+            myModal.show();
+        };
+    </script>
+    <?php endif; ?>
+
 </body>
 </html>
